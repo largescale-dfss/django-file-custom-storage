@@ -2,5 +2,5 @@
 Django file custom storage
 
 
-`customFileStorage` is the name of the Django project.  
-`custom_storage_app` is the name of the app inside the project.
+File uploading example taken from https://github.com/axelpale/minimal-django-file-upload-example  
+The custom file storage will be built/tested on top of this.
