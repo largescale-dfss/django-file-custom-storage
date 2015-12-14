@@ -41,11 +41,13 @@ class MyStorage(Storage):
 	def sendFile(self, transferFile, filePath, timeStamp):
 		print "Sending file to Manager"
 
-		hold = str(transferFile)
+		transferFile.open(mode='rb') 
+		hello = transferFile.read()
+
 		channel = implementations.insecure_channel('localhost', 50050)
 		stub = manager_django_pb2.beta_create_Manager_stub(channel)
 
-		response = stub.SaveFile(manager_django_pb2.SaveRequest(save_file=hold, save_path=filePath, timestamp=timeStamp), _TIMEOUT_SECONDS)
+		response = stub.SaveFile(manager_django_pb2.SaveRequest(save_file=hello, save_path=filePath, timestamp=timeStamp), _TIMEOUT_SECONDS)
 
 		#print response.transfer_status
 		# print transferFile
