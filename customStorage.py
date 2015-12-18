@@ -38,8 +38,8 @@ class MyStorage(Storage):
 		
 		fileName = str(content).split("@")
 
-		file_path = name[0]
-		timeStamp = name[1]
+		file_path = fileName[0]
+		timeStamp = fileName[1]
 
 		#THIS IS THE FUNCTION CALL TO THE MANAGER VIA RPC
 		filePath = self.sendFile(content, file_path, timeStamp)
@@ -64,7 +64,7 @@ class MyStorage(Storage):
 		channel = implementations.insecure_channel('localhost', 50050)
 		stub = manager_django_pb2.beta_create_Manager_stub(channel)
 
-		response = stub.SaveFile(manager_django_pb2.SaveRequest(save_file=hello, save_path=filePath, timestamp=timeStamp), _TIMEOUT_SECONDS)
+		response = stub.SaveFile(manager_django_pb2.SaveRequest(save_file=hello, save_path=filePath, timestamp=long(timeStamp)), _TIMEOUT_SECONDS)
 
 		#print response.transfer_status
 		# print transferFile
