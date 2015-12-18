@@ -45,7 +45,7 @@ class MyStorage(Storage):
 		filePath = self.sendFile(content, file_path, timeStamp)
 
 		#You need to return the save URL
-		return file_path
+		return str(content)
 
 	#dummy implementation
 	def get_available_name(self, name):
