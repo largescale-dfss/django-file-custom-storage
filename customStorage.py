@@ -25,10 +25,9 @@ class MyStorage(Storage):
 		timeStamp = fileName[1]
 
 		#THIS IS THE FUNCTION CALL TO THE MANAGER VIA RPC. It should return a file.
-		fileContent = self.sendFile(content, file_path, timeStamp)
+		fileContent = self.readFile(file_path, timeStamp)
 		
-
-		return name
+		return fileContent
 
 	def _save(self, name, content):
 		print "####CALLED SAVE####"
@@ -55,7 +54,7 @@ class MyStorage(Storage):
 	def url(self, name):
 		return name
 
-	#call to the manager via RPC
+	#sendFile to the manager via RPC
 	def sendFile(self, transferFile, filePath, timeStamp):
 		print "Sending file to Manager"
 
@@ -80,4 +79,25 @@ class MyStorage(Storage):
 
 
 
+	#readFile from the manager via RPC
+	def openFile(self, filePath, timeStamp):
+		print "Reading file from Manager"
 
+
+		channel = implementations.insecure_channel('localhost', 50050)
+		stub = manager_django_pb2.beta_create_Manager_stub(channel)
+
+		response = stub.OpenFile(manager_django_pb2.OpenRequest(open_path=filePath, timestamp=timeStamp), _TIMEOUT_SECONDS)
+
+		fileContent = response.open_file
+
+		#the response should be a file
+		
+		#This is just test code for saving file
+		filename = os.path.basename(filePath)
+
+		with open(filename, 'wb') as f:
+			f.write(fileContent)
+
+		#we should be returning the file
+		return response
