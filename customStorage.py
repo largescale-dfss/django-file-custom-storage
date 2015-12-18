@@ -17,15 +17,23 @@ class MyStorage(Storage):
 		if not option:
 			option = settings.CUSTOM_STORAGE_OPTIONS
 	def _open(self, name, mode='rb'):
-		print "called open"
-		print name
+		print "####CALLED OPEN####"
+
+		fileName = name.split("@")
+
+		file_path = fileName[0]
+		timeStamp = fileName[1]
+
+		#THIS IS THE FUNCTION CALL TO THE MANAGER VIA RPC. It should return a file.
+		fileContent = self.sendFile(content, file_path, timeStamp)
+		
+
 		return name
 
 	def _save(self, name, content):
 		print "####CALLED SAVE####"
 		#content is a subclass of Django File object
 		#https://docs.djangoproject.com/en/1.9/ref/files/file/
-		timeStamp = timestamp = int(time.time())
 
 		#should make into format [user/resume/text.txt, timeStampInEpoch]
 		
