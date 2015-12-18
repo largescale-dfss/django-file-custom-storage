@@ -18,18 +18,27 @@ class MyStorage(Storage):
 			option = settings.CUSTOM_STORAGE_OPTIONS
 	def _open(self, name, mode='rb'):
 		print "called open"
+		print name
 		return name
+
 	def _save(self, name, content):
 		print "####CALLED SAVE####"
 		#content is a subclass of Django File object
 		#https://docs.djangoproject.com/en/1.9/ref/files/file/
 		timeStamp = timestamp = int(time.time())
-		filePath = self.sendFile(content, name, timeStamp)
 
-		print "PRINTING RETURN VALUE"
-		print filePath
+		#should make into format [user/resume/text.txt, timeStampInEpoch]
+		
+		fileName = str(content).split("@")
 
-		return name
+		file_path = name[0]
+		timeStamp = name[1]
+
+		#THIS IS THE FUNCTION CALL TO THE MANAGER VIA RPC
+		filePath = self.sendFile(content, file_path, timeStamp)
+
+		#You need to return the save URL
+		return file_path
 
 	#dummy implementation
 	def get_available_name(self, name):
@@ -38,6 +47,7 @@ class MyStorage(Storage):
 	def url(self, name):
 		return name
 
+	#call to the manager via RPC
 	def sendFile(self, transferFile, filePath, timeStamp):
 		print "Sending file to Manager"
 
