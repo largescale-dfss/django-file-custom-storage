@@ -17,16 +17,17 @@ class MyStorage(Storage):
 		if not option:
 			option = settings.CUSTOM_STORAGE_OPTIONS
 	def _open(self, name, mode='rb'):
-		print "called open"
-		print name
+		print "####CALLED SAVE####"
+
+
+
 		return name
 
 	def _save(self, name, content):
 		print "####CALLED SAVE####"
 		#content is a subclass of Django File object
 		#https://docs.djangoproject.com/en/1.9/ref/files/file/
-		timeStamp = timestamp = int(time.time())
-
+		
 		#should make into format [user/resume/text.txt, timeStampInEpoch]
 		
 		fileName = str(content).split("@")
