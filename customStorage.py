@@ -25,7 +25,7 @@ class MyStorage(Storage):
 		timeStamp = fileName[1]
 
 		#THIS IS THE FUNCTION CALL TO THE MANAGER VIA RPC. It should return a file.
-		fileContent = self.readFile(file_path, timeStamp)
+		fileContent = self.openFile(file_path, timeStamp)
 		
 		return fileContent
 
