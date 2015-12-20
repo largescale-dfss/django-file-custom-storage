@@ -87,7 +87,7 @@ class MyStorage(Storage):
 		channel = implementations.insecure_channel('localhost', 50050)
 		stub = manager_django_pb2.beta_create_Manager_stub(channel)
 
-		response = stub.OpenFile(manager_django_pb2.OpenRequest(open_path=filePath, timestamp=timeStamp), _TIMEOUT_SECONDS)
+		response = stub.OpenFile(manager_django_pb2.OpenRequest(open_path=filePath, timestamp=long(timeStamp)), _TIMEOUT_SECONDS)
 
 		fileContent = response.open_file
 
