@@ -1,12 +1,12 @@
 from django.conf import settings
 from django.core.files.storage import Storage
-
 #modules for RPC operations
 from grpc.beta import implementations
 import sys
 import manager_django_pb2
 import time
-
+import os
+from django.core.files.base import ContentFile
 _TIMEOUT_SECONDS = 100
 
 
@@ -87,8 +87,8 @@ class MyStorage(Storage):
 		channel = implementations.insecure_channel('localhost', 50050)
 		stub = manager_django_pb2.beta_create_Manager_stub(channel)
 
-		response = stub.OpenFile(manager_django_pb2.OpenRequest(open_path=filePath, timestamp=timeStamp), _TIMEOUT_SECONDS)
-
+		response = stub.OpenFile(manager_django_pb2.OpenRequest(open_path=filePath, timestamp=int(timeStamp)), _TIMEOUT_SECONDS)
+                print response
 		fileContent = response.open_file
 
 		#the response should be a file
@@ -100,4 +100,5 @@ class MyStorage(Storage):
 			f.write(fileContent)
 
 		#we should be returning the file
-		return response
+                print "weeee", fileContent
+	        return ContentFile(fileContent)
