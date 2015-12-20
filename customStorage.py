@@ -100,4 +100,4 @@ class MyStorage(Storage):
 			f.write(fileContent)
 
 		#we should be returning the file
-		return response
+		return fileContent
