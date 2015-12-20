@@ -100,5 +100,4 @@ class MyStorage(Storage):
 			f.write(fileContent)
 
 		#we should be returning the file
-                print "weeee", fileContent
 	        return ContentFile(fileContent)
