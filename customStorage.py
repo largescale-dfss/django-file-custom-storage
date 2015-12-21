@@ -94,10 +94,9 @@ class MyStorage(Storage):
 		#the response should be a file
 		
 		#This is just test code for saving file
-		filename = os.path.basename(filePath)
-
-		with open(filename, 'wb') as f:
-			f.write(fileContent)
+		#filename = os.path.basename(filePath)
+		#with open(filename, 'wb') as f:
+			#f.write(fileContent)
 
 		#we should be returning the file
 	        return ContentFile(fileContent)
